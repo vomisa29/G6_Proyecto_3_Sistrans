@@ -34,65 +34,7 @@ public class servicios {
         this.tipo = tipo;
     }
 
-    //crear Prestamo Utencilios
-    public servicios(Integer id, Integer costo, String tipo, String nom_utencilios) {
-        this.id = id;
-        this.costo = costo;
-        this.tipo = tipo;
-        this.nom_utencilios = nom_utencilios;
-    }
-
-    //crear lavado
-    public servicios(Integer id, Integer costo, String tipo, String tipo_prenda, Integer num_prenda) {
-        this.id = id;
-        this.costo = costo;
-        this.tipo = tipo;
-        this.tipo_prenda = tipo_prenda;
-        this.num_prenda = num_prenda;
-    }
-
-    //crear gimnasio
-    public servicios(Integer id, Integer costo, String tipo, Integer capacidad, Integer num_maquinas, String horario_servicio) {
-        this.id = id;
-        this.costo = costo;
-        this.tipo = tipo;
-        this.capacidad = capacidad;
-        this.num_maquinas = num_maquinas;
-        this.horario_servicio = horario_servicio;
-    }
-
-    //crear internet
-    public servicios(Integer id, Integer costo, String tipo, Integer capacidad) {
-        this.id = id;
-        this.costo = costo;
-        this.tipo = tipo;
-        this.capacidad = capacidad;
-    }
-
-    //crear piscina
-    public servicios(Integer id, Integer costo, String tipo, Integer capacidad, Integer profundidad, String horario_servicio, String descripcion, String nombre) {
-        this.id = id;
-        this.costo = costo;
-        this.tipo = tipo;
-        this.capacidad = capacidad;
-        this.profundidad = profundidad;
-        this.horario_servicio = horario_servicio;
-        this.descripcion = descripcion;
-        this.nombre = nombre;
-    }
-
-    //para restaurante, supermercado, bar, tienda y spa
-    public servicios(Integer id, Integer costo, String tipo, Integer capacidad, String estilo,Integer id_subServicio, String nombre,String tipo_tienda,ArrayList<producto> productos) {
-        this.id = id;
-        this.costo = costo;
-        this.tipo = tipo;
-        this.capacidad = capacidad;
-        this.id_subServicio = id_subServicio;
-        this.nombre = nombre;
-        this.productos = productos;
-        this.tipo_tienda = tipo_tienda;
-    }
-
+    
     public Integer getId() {
         return id;
     }

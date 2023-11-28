@@ -9,7 +9,7 @@ import G06proy3.modelo.servicios;
 
 public interface serviciosRepository extends MongoRepository<servicios,String>{
 
-    @Query("{tipo:'?0'}")
+    @Query(value="{tipo:'?0'}", fields="{'tipo':1,'costo':1}")
     List<servicios> findByType(String tipo);
     
 }
