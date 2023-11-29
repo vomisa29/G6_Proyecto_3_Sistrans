@@ -1,6 +1,7 @@
 package G06proy3.modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,6 +27,9 @@ public class servicios {
     private Integer id_subServicio;//para restaurante, supermercado, bar, tienda y spa
     private String tipo_tienda;
     private ArrayList<producto> productos;
+    private Date fecha_horaReserva;
+    private double duracion;
+    private Integer id_salon;
     
     //crear servicio generico
     public servicios(Integer id, Integer costo, String tipo) {
@@ -161,5 +165,36 @@ public class servicios {
 
     public void setTipo_tienda(String tipo_tienda) {
         this.tipo_tienda = tipo_tienda;
-    }   
+    }
+
+
+    public Date isFecha_horaReserva() {
+        return fecha_horaReserva;
+    }
+
+
+    public void setFecha_horaReserva(Date fecha_horaReserva) {
+        this.fecha_horaReserva = fecha_horaReserva;
+    }
+
+
+    public double getDuracion() {
+        return duracion;
+    }
+
+
+    public void setDuracion(double duracion) {
+        this.duracion = duracion;
+    }
+
+
+    public Integer getId_salon() {
+        return id_salon;
+    }
+
+
+    public void setId_salon(Integer id_salon) {
+        this.id_salon = id_salon;
+    }  
+
 }

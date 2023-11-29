@@ -1,6 +1,7 @@
 package G06proy3;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -36,7 +37,8 @@ public class G06Proy3Application implements CommandLineRunner{
 		showAllServices();
 		System.out.println("\n----- Todos los servicios de piscinas----");
 		getServiciosByTipo("piscina");;
-		Integer id= 125;
+		System.out.println("Digite id de un servicio(ej:12)");
+		Integer id = Integer.parseInt(this.scanner.nextLine());
 		System.out.println("\n-----Servicios con el id: " +id+" -----");
 		getServiciosById(id);
 		this.scanner.close();
@@ -121,6 +123,15 @@ public class G06Proy3Application implements CommandLineRunner{
 		repoServicios.save(tienda);
 	}
 
+	void createServicioReserva(Integer id, Integer costo, String tipo,Integer id_salon, Integer capacidad,Date fecha_horaReserva, double duracion){
+		servicios reservaSalon = new servicios(id, costo, tipo);
+		reservaSalon.setId_salon(id_salon);
+		reservaSalon.setCapacidad(capacidad);
+		reservaSalon.setFecha_horaReserva(fecha_horaReserva);
+		reservaSalon.setDuracion(duracion);
+		repoServicios.save(reservaSalon);
+	}
+	
 	public void showAllServices(){
 		repoServicios.findAll().forEach(servicios->System.out.println(getServiciosDetails(servicios)));
 	}
@@ -147,13 +158,8 @@ public class G06Proy3Application implements CommandLineRunner{
 		
 	}
 
-	public void updateServicio(){
-		  // Create a Scanner object
+	public void updateServicioCosto(Integer id, Integer costo){
 		
-    	System.out.println("Inserte id del servicio a actualizar");
-
-    	Integer id = Integer.parseInt(this.scanner.nextLine());  // Read user input
-
 	}
 
 	public void deleteServiciosById(Integer id){
