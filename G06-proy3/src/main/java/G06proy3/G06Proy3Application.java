@@ -14,7 +14,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import G06proy3.modelo.producto;
 import G06proy3.modelo.servicios;
+import G06proy3.modelo.tipoHabitacion;
 import G06proy3.repositorio.serviciosRepository;
+import G06proy3.repositorio.tipoHabitacionRepository;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -22,6 +24,7 @@ public class G06Proy3Application implements CommandLineRunner{
 
 	@Autowired
 	serviciosRepository repoServicios;
+	tipoHabitacionRepository repoTipoHabitacion;
 
 	Scanner scanner;
 	public static void main(String[] args) {
@@ -35,8 +38,10 @@ public class G06Proy3Application implements CommandLineRunner{
 		//createServicios();
 		System.out.println("\n----- Todos los servicios ----");
 		showAllServices();
-		System.out.println("\n----- Todos los servicios de piscinas----");
-		getServiciosByTipo("piscina");;
+		System.out.println("Digite un tipo de servicio(ej:piscina)");
+		String tipo = this.scanner.nextLine();
+		System.out.println("\n----- Todos los servicios de " +tipo+ " ----");
+		getServiciosByTipo(tipo);;
 		System.out.println("Digite id de un servicio(ej:12)");
 		Integer id = Integer.parseInt(this.scanner.nextLine());
 		System.out.println("\n-----Servicios con el id: " +id+" -----");
@@ -45,7 +50,14 @@ public class G06Proy3Application implements CommandLineRunner{
 	};
 	
 
-	void createServicios(){
+
+////Servicios---------------------------------------------------------------------------------------------------------------------------------------
+
+	void interfazServicios(){
+
+	}
+
+    void createServicios(){
 		
 	}
 
@@ -132,14 +144,13 @@ public class G06Proy3Application implements CommandLineRunner{
 		repoServicios.save(reservaSalon);
 	}
 	
+	producto crearProducto(Integer id, String nom_producto, Integer costo){
+		producto producto = new producto(id, nom_producto, costo);
+		return producto;
+	}
+	
 	public void showAllServices(){
 		repoServicios.findAll().forEach(servicios->System.out.println(getServiciosDetails(servicios)));
-	}
-
-	public String getServiciosDetails(servicios servicioActual){
-		return "\nid: " + String.valueOf(servicioActual.getId()) +
-		"\ncosto: " + String.valueOf(servicioActual.getCosto()) +
-		"\ntipo: " + servicioActual.getTipo(); 
 	}
 
 	public void getServiciosByTipo(String tipo){
@@ -159,7 +170,14 @@ public class G06Proy3Application implements CommandLineRunner{
 	}
 
 	public void updateServicioCosto(Integer id, Integer costo){
-		
+		Optional<servicios> serviciosID = repoServicios.findById(id);
+		if(serviciosID.isPresent()){
+			serviciosID.get().setCosto(costo);
+			repoServicios.save(serviciosID.get());
+			System.out.println("Se actualizo el costo correctamente");
+		}else {
+			System.out.println("No existe un servicio con ese ID");
+		}
 	}
 
 	public void deleteServiciosById(Integer id){
@@ -167,4 +185,50 @@ public class G06Proy3Application implements CommandLineRunner{
 		System.out.println("Se borro el servicio con el id: " + id);
 	}
 
+	
+	public String getServiciosDetails(servicios servicioActual){
+		return "\nid: " + String.valueOf(servicioActual.getId()) +
+		"\ncosto: " + String.valueOf(servicioActual.getCosto()) +
+		"\ntipo: " + servicioActual.getTipo(); 
+	}
+
+
+////TipoHabitacion---------------------------------------------------------------------------------------------------------------------------
+
+	public void crearTipoHabitacion(Integer idTipo, String nombre, Integer capacidad, Integer costo){
+		tipoHabitacion tipoHabitacion = new tipoHabitacion(idTipo, nombre, capacidad, costo);
+		repoTipoHabitacion.save(tipoHabitacion);
+	}
+
+	public void getTipoHabitacion(Integer id){
+		Optional<tipoHabitacion> tipoHabitacionID = repoTipoHabitacion.findById(id);
+		if(tipoHabitacionID.isPresent()){
+			System.out.println(getTipoHabitacionDetails(tipoHabitacionID.get()));
+		}else {
+			System.out.println("No existe un tipo de habitacion con ese ID");
+		}
+	}
+
+	public void updateTipoHabitacionCosto(Integer id, Integer costo){
+		Optional<tipoHabitacion> tipoHabitacionID = repoTipoHabitacion.findById(id);
+		if(tipoHabitacionID.isPresent()){
+			tipoHabitacionID.get().setCosto(costo);
+			repoTipoHabitacion.save(tipoHabitacionID.get());
+			System.out.println("Se actualizo el costo correctamente");
+		}else {
+			System.out.println("No existe un tipo de habitacion con ese ID");
+		}
+	}
+
+	public void deleteTipoHabitacionById(Integer id){
+		repoTipoHabitacion.deleteById(id);
+		System.out.println("Se borro el tipo de habitacion con el id: " + id);
+	}
+
+	String getTipoHabitacionDetails(tipoHabitacion tipohabitacionActual){
+		return "\nid: " + tipohabitacionActual.getIdTipo() +
+		"\nnombre: " + tipohabitacionActual.getNombre() +
+		"\ncapacidad: " + tipohabitacionActual.getCapacidad() +
+		"\ncosto: " + tipohabitacionActual.getCosto();
+	}
 }
