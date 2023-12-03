@@ -10,6 +10,6 @@ import G06proy3.modelo.tipoHabitacion;
 public interface tipoHabitacionRepository extends MongoRepository<tipoHabitacion,Integer>{
 
     @Query(value="{capacidad:'?0'}", fields="{'nombreTipo':1,'costo':1}")
-    List<tipoHabitacion> findByType(Integer capacidad);
+    List<tipoHabitacion> findByCapacidad(Integer capacidad);
     
 }

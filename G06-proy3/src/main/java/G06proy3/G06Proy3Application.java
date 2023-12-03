@@ -12,9 +12,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import G06proy3.modelo.cliente;
+import G06proy3.modelo.consumo;
+import G06proy3.modelo.habitacion;
 import G06proy3.modelo.producto;
+import G06proy3.modelo.reserva;
 import G06proy3.modelo.servicios;
 import G06proy3.modelo.tipoHabitacion;
+import G06proy3.repositorio.clienteRepository;
+import G06proy3.repositorio.habitacionRepository;
+import G06proy3.repositorio.reservasRepository;
 import G06proy3.repositorio.serviciosRepository;
 import G06proy3.repositorio.tipoHabitacionRepository;
 
@@ -24,7 +31,18 @@ public class G06Proy3Application implements CommandLineRunner{
 
 	@Autowired
 	serviciosRepository repoServicios;
+
+	@Autowired
 	tipoHabitacionRepository repoTipoHabitacion;
+
+	@Autowired
+	habitacionRepository repoHabitacion;
+
+	@Autowired
+	clienteRepository repoClientes;
+
+	@Autowired
+	reservasRepository repoReservas;
 
 	Scanner scanner;
 	public static void main(String[] args) {
@@ -36,16 +54,20 @@ public class G06Proy3Application implements CommandLineRunner{
 		this.scanner = new Scanner(System.in);
 		//System.out.println("---- Creation of Items ----");
 		//createServicios();
-		System.out.println("\n----- Todos los servicios ----");
-		showAllServices();
-		System.out.println("Digite un tipo de servicio(ej:piscina)");
-		String tipo = this.scanner.nextLine();
-		System.out.println("\n----- Todos los servicios de " +tipo+ " ----");
-		getServiciosByTipo(tipo);;
-		System.out.println("Digite id de un servicio(ej:12)");
-		Integer id = Integer.parseInt(this.scanner.nextLine());
-		System.out.println("\n-----Servicios con el id: " +id+" -----");
-		getServiciosById(id);
+		//System.out.println("\n----- Todos los servicios ----");
+		//showAllServices();
+		//System.out.println("\nDigite un tipo de servicio(ej:piscina)");
+		//String tipo = this.scanner.nextLine();
+		//System.out.println("\n----- Todos los servicios de " +tipo+ " ----");
+		//getServiciosByTipo(tipo);;
+		//System.out.println("\nDigite id de un servicio(ej:12)");
+		//Integer id = Integer.parseInt(this.scanner.nextLine());
+		//System.out.println("\n-----Servicios con el id: " +id+" -----");
+		//getServiciosById(id);
+		System.out.println("prueba");
+		Date fecha_inicio = new Date();
+		Date fecha_fin = new Date();
+		getReservasIntervalo(fecha_inicio, fecha_fin);
 		this.scanner.close();
 	};
 	
@@ -58,7 +80,7 @@ public class G06Proy3Application implements CommandLineRunner{
 	}
 
     void createServicios(){
-		
+		//aqui debe estar la logica para escoger un servicio en especifico
 	}
 
 	void createServicioPrestamo_Utencilios(Integer id, Integer costo, String nom_utencilio){
@@ -195,6 +217,10 @@ public class G06Proy3Application implements CommandLineRunner{
 
 ////TipoHabitacion---------------------------------------------------------------------------------------------------------------------------
 
+	void interfazTipoHabitacion(){
+		
+	}
+
 	public void crearTipoHabitacion(Integer idTipo, String nombre, Integer capacidad, Integer costo){
 		tipoHabitacion tipoHabitacion = new tipoHabitacion(idTipo, nombre, capacidad, costo);
 		repoTipoHabitacion.save(tipoHabitacion);
@@ -207,6 +233,12 @@ public class G06Proy3Application implements CommandLineRunner{
 		}else {
 			System.out.println("No existe un tipo de habitacion con ese ID");
 		}
+	}
+
+	public void getTipoHabitacionByCapacidad(Integer capacidad){
+		System.out.println("Mostrando Servicios por el capacidad: " + capacidad);
+		List<tipoHabitacion> lista = repoTipoHabitacion.findByCapacidad(capacidad);
+		lista.forEach(tipoHabitacion -> System.out.println(getTipoHabitacionDetails(tipoHabitacion)));
 	}
 
 	public void updateTipoHabitacionCosto(Integer id, Integer costo){
@@ -230,5 +262,105 @@ public class G06Proy3Application implements CommandLineRunner{
 		"\nnombre: " + tipohabitacionActual.getNombre() +
 		"\ncapacidad: " + tipohabitacionActual.getCapacidad() +
 		"\ncosto: " + tipohabitacionActual.getCosto();
+	}
+
+////Habitacion---------------------------------------------------------------------------------------------------------------------------
+
+	void interfazHabitacion(){
+
+	}
+
+	public void crearHabitacion(Integer idHabitacion, Integer idTipo, boolean televisor, boolean minibar, boolean cafetera){
+		habitacion habitacion = new habitacion(idHabitacion, idTipo, televisor, minibar, cafetera);
+		repoHabitacion.save(habitacion);
+	}
+
+	public void getHabitacion(Integer id){
+		Optional<habitacion> habitacionID = repoHabitacion.findById(id);
+		if(habitacionID.isPresent()){
+			System.out.println(gethabitacionDetails(habitacionID.get()));
+		}else {
+			System.out.println("No existe una habitacion con ese ID");
+		}
+	}
+	
+	public void updateHabitacionCosto(Integer id, boolean televisor){
+		Optional<habitacion> habitacionID = repoHabitacion.findById(id);
+		if(habitacionID.isPresent()){
+			habitacionID.get().setTelevisor(televisor);
+			repoHabitacion.save(habitacionID.get());
+			System.out.println("Se actualizo correctamente");
+		}else {
+			System.out.println("No existe una habitacion con ese ID");
+		}
+	}
+
+	public void deleteHabitacionById(Integer id){
+		repoHabitacion.deleteById(id);
+		System.out.println("Se borro la habitacion con el id: " + id);
+	}
+
+	String gethabitacionDetails(habitacion habitacionActual){
+		return "\nid: " + habitacionActual.getIdHabitacion() +
+		"\ntelevisor: " + habitacionActual.isTelevisor() +
+		"\nminibar: " + habitacionActual.isMinibar() +
+		"\ncafetera: " + habitacionActual.isCafetera();
+	}
+
+////Cliente---------------------------------------------------------------------------------------------------------------------------
+
+	void interfazClientes(){
+
+	}
+
+	public void crearCliente(Integer idCliente, String nombre, ArrayList<consumo> consumo){
+		cliente cliente = new cliente(idCliente, nombre);
+		if(consumo != null){
+			cliente.setConsumo(consumo);
+		}
+		repoClientes.save(cliente);
+	}
+
+	public void getCliente(Integer id){
+		Optional<cliente> clienteID = repoClientes.findById(id);
+		if(clienteID.isPresent()){
+			System.out.println(getClienteDetails(clienteID.get()));
+		}else {
+			System.out.println("No existe un cliente con ese ID");
+		}
+	}
+
+	public void updateClienteNombre(Integer id, String nombre){
+		Optional<cliente> clienteID = repoClientes.findById(id);
+		if(clienteID.isPresent()){
+			clienteID.get().setNombre(nombre);
+			repoClientes.save(clienteID.get());
+			System.out.println("Se actualizo correctamente");
+		}else {
+			System.out.println("No existe un cliente con ese ID");
+		}
+	}
+
+	public void deleteClienteById(Integer id){
+		repoClientes.deleteById(id);
+		System.out.println("Se borro el cliente con el id: " + id);
+	}
+
+	String getClienteDetails(cliente clienteActual){
+		return "\nid: " + clienteActual.getIdCliente() +
+		"\nnombre: " + clienteActual.getNombre();
+	}
+
+////Reserva---------------------------------------------------------------------------------------------------------------------------
+
+	public List<reserva> getReservasIntervalo(Date fecha_inicio, Date fecha_fin){
+		repoReservas.findByIdHabitacion(21);
+		List<reserva> lista = repoReservas.findByRange(fecha_inicio, fecha_fin);
+		if(lista.isEmpty()){
+			System.out.println(1);
+		}else{
+			System.out.println(2);
+		}
+		return lista;
 	}
 }
