@@ -65,11 +65,11 @@ public class G06Proy3Application implements CommandLineRunner{
 		//Integer id = Integer.parseInt(this.scanner.nextLine());
 		//System.out.println("\n-----Servicios con el id: " +id+" -----");
 		//getServiciosById(id);
-		System.out.println("prueba getReservasIntervalo()  -  Funciona correctamente");
-		LocalDate fecha_inicio = LocalDate.parse("2018-05-05");
-		LocalDate fecha_fin = LocalDate.parse("2020-05-05");
+		LocalDate fecha_inicio = LocalDate.parse("2022-05-03");
+		LocalDate fecha_fin = LocalDate.parse("2022-05-05");
 		Integer idHabitacion = 12;
-		getReservasIntervalo(fecha_inicio, fecha_fin,idHabitacion);
+		System.out.println("Crear reserva");
+		crearReserva(132, idHabitacion, 21, fecha_inicio, fecha_fin, null);
 		this.scanner.close();
 	};
 	
