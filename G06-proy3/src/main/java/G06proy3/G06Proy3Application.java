@@ -414,4 +414,58 @@ public class G06Proy3Application implements CommandLineRunner{
 		List<reserva> lista = repoReservas.findByRange(fecha_inicio, fecha_fin,idHabitacion);
 		return lista;
 	}
+
+////LLegada o salida de un Cliente---------------------------------------------------------------------------------------------------------------------------
+
+	void interfaz_LLegada_Salida(){
+
+	}
+
+	void getLLegadaCliente(Integer idCliente, Integer idReserva){
+		reserva llegadaCliente = repoReservas.findByIdCliente_AND_IdReserva(idCliente, idReserva);
+		if(llegadaCliente != null){
+			System.out.println("La fecha de llegada del cliente para la reserva dada es: " + llegadaCliente.getFecha_inicio());
+		}else{
+			System.out.println("No existe una reserva para el cliente dado.");
+		}
+	}
+
+	void getSalidaCliente(Integer idCliente, Integer idReserva){
+		reserva llegadaCliente = repoReservas.findByIdCliente_AND_IdReserva(idCliente, idReserva);
+		if(llegadaCliente != null){
+			System.out.println("La fecha de salida del cliente para la reserva dada es: " + llegadaCliente.getFecha_fin());
+		}else{
+			System.out.println("No existe una reserva para el cliente dado.");
+		}
+	}
+
+	void updateLLegadaCliente(Integer idCliente, Integer idReserva, LocalDate fecha_inicio){
+		Optional<reserva> lista = repoReservas.findById(idReserva);
+		String salida = "No se puede realizar la actualización.";
+		if(lista.isPresent()){
+			LocalDate fecha_fin = lista.get().getFecha_fin();
+			Integer idHabitacion = lista.get().getIdHabitacion();
+			List<reserva> listaIntervalo = getReservasIntervalo(fecha_inicio, fecha_fin,idHabitacion);
+			if(listaIntervalo.isEmpty()){
+				lista.get().setFecha_inicio(fecha_inicio);
+				salida = "Se realizo el cambio correctamente.";
+			}
+		}
+		System.out.println(salida);
+	}
+
+	void updateSalidaCliente(Integer idCliente, Integer idReserva, LocalDate fecha_fin){
+		Optional<reserva> lista = repoReservas.findById(idReserva);
+		String salida = "No se puede realizar la actualización.";
+		if(lista.isPresent()){
+			LocalDate fecha_inicio = lista.get().getFecha_inicio();
+			Integer idHabitacion = lista.get().getIdHabitacion();
+			List<reserva> listaIntervalo = getReservasIntervalo(fecha_inicio, fecha_fin,idHabitacion);
+			if(listaIntervalo.isEmpty()){
+				lista.get().setFecha_fin(fecha_fin);
+				salida = "Se realizo el cambio correctamente.";
+			}
+		}
+		System.out.println(salida);
+	}
 }

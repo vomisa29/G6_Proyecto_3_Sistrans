@@ -17,6 +17,6 @@ public interface reservasRepository extends MongoRepository<reserva,Integer>{
     "]}")
     List<reserva> findByRange(LocalDate fecha_inicio, LocalDate fecha_fin, Integer idHabitacion);
 
-    @Query("idHabitacion:'?0")
-    List<reserva> findByIdHabitacion(Integer idHabitacion);
+    @Query("{$and:[{idCliente:'?0},{idReserva:'?1'}]}")
+    reserva findByIdCliente_AND_IdReserva(Integer idCliente, Integer idReserva);
 }
