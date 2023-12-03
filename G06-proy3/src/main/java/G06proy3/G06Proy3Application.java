@@ -1,5 +1,6 @@
 package G06proy3;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,10 +65,11 @@ public class G06Proy3Application implements CommandLineRunner{
 		//Integer id = Integer.parseInt(this.scanner.nextLine());
 		//System.out.println("\n-----Servicios con el id: " +id+" -----");
 		//getServiciosById(id);
-		System.out.println("prueba");
-		Date fecha_inicio = new Date();
-		Date fecha_fin = new Date();
-		getReservasIntervalo(fecha_inicio, fecha_fin);
+		System.out.println("prueba getReservasIntervalo()  -  Funciona correctamente");
+		LocalDate fecha_inicio = LocalDate.parse("2018-05-05");
+		LocalDate fecha_fin = LocalDate.parse("2020-05-05");
+		Integer idHabitacion = 12;
+		getReservasIntervalo(fecha_inicio, fecha_fin,idHabitacion);
 		this.scanner.close();
 	};
 	
@@ -353,14 +355,63 @@ public class G06Proy3Application implements CommandLineRunner{
 
 ////Reserva---------------------------------------------------------------------------------------------------------------------------
 
-	public List<reserva> getReservasIntervalo(Date fecha_inicio, Date fecha_fin){
-		repoReservas.findByIdHabitacion(21);
-		List<reserva> lista = repoReservas.findByRange(fecha_inicio, fecha_fin);
+	void interfazReserva(){
+
+	}
+
+	//Crea una reserva si es posible: es decir si la habitacion no tiene una reserva ya para esa fecha
+	public void crearReserva(Integer idReserva, Integer idHabitacion, Integer idCliente, LocalDate fecha_inicio, LocalDate fecha_fin, ArrayList<Integer> consumo){
+		List<reserva> lista = getReservasIntervalo(fecha_inicio, fecha_fin,idHabitacion);
 		if(lista.isEmpty()){
-			System.out.println(1);
+			reserva reserva = new reserva(idReserva, idHabitacion, idCliente, fecha_inicio, fecha_fin);
+			if(consumo != null){
+				reserva.setConsumo(consumo);
+			}
+			repoReservas.save(reserva);
+			System.out.println("Se creo la reserva correctamente.");
+
 		}else{
-			System.out.println(2);
+			System.out.println("No se puede: La habitacion ya tiene una reserva para esa fecha.");
 		}
+
+	}
+
+	public void getReserva(Integer idReserva){
+		Optional<reserva> reservaID = repoReservas.findById(idReserva);
+		if(reservaID.isPresent()){
+			System.out.println(getReservaDetails(reservaID.get()));
+		}else {
+			System.out.println("No existe un reserva con ese ID");
+		}
+	}
+
+	public void updateReservaIdHabitacion(Integer idReserva, Integer idHabitacion){
+		Optional<reserva> reservaID = repoReservas.findById(idHabitacion);
+		reserva reservaActual = reservaID.get();
+		if(reservaID.isPresent() && (getReservasIntervalo(reservaActual.getFecha_inicio(), reservaActual.getFecha_fin(), idHabitacion).isEmpty())){
+			reservaActual.setIdHabitacion(idHabitacion);
+			repoReservas.save(reservaActual);
+			System.out.println("Se actualizo la reserva correctamente");
+		}else{
+			System.out.println("No se puede actualizar la reserva");
+		}
+	}
+
+	public void deleteReserva(Integer idReserva){
+		repoReservas.deleteById(idReserva);
+		System.out.println("Se borro la reserva con el id: " + idReserva);
+	}
+
+	String getReservaDetails(reserva reservaActual){
+		return "\nidReserva: " + reservaActual.getIdReserva() +
+		"\nidHabitacion: " + reservaActual.getIdHabitacion() +
+		"\nidCliente: " + reservaActual.getIdCliente() + 
+		"\nfecha_inicio: " + reservaActual.getFecha_inicio().toString() +
+		"\nfecha_fin: " + reservaActual.getFecha_fin().toString();
+	}
+
+	public List<reserva> getReservasIntervalo(LocalDate fecha_inicio, LocalDate fecha_fin,Integer idHabitacion){
+		List<reserva> lista = repoReservas.findByRange(fecha_inicio, fecha_fin,idHabitacion);
 		return lista;
 	}
 }

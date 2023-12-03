@@ -1,7 +1,7 @@
 package G06proy3.modelo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,11 +14,11 @@ public class reserva {
 
     private Integer idHabitacion;
     private Integer idCliente;
-    private Date fecha_inicio;
-    private Date fecha_fin;
+    private LocalDate fecha_inicio;
+    private LocalDate fecha_fin;
     private ArrayList<Integer> consumo;
     
-    public reserva(Integer idReserva, Integer idHabitacion, Integer idCliente, Date fecha_inicio, Date fecha_fin) {
+    public reserva(Integer idReserva, Integer idHabitacion, Integer idCliente, LocalDate fecha_inicio, LocalDate fecha_fin) {
         this.idReserva = idReserva;
         this.idHabitacion = idHabitacion;
         this.idCliente = idCliente;
@@ -50,19 +50,19 @@ public class reserva {
         this.idCliente = idCliente;
     }
 
-    public Date getFecha_inicio() {
+    public LocalDate getFecha_inicio() {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(Date fecha_inicio) {
+    public void setFecha_inicio(LocalDate fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
-    public Date getFecha_fin() {
+    public LocalDate getFecha_fin() {
         return fecha_fin;
     }
 
-    public void setFecha_fin(Date fecha_fin) {
+    public void setFecha_fin(LocalDate fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
 

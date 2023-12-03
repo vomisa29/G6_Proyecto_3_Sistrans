@@ -1,6 +1,6 @@
 package G06proy3.repositorio;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,9 +12,10 @@ public interface reservasRepository extends MongoRepository<reserva,Integer>{
     
     @Query("{$and:[" +
     "{fecha_inicio:{$gte: '?0'}}," +
-    "{fecha_fin:{$lte: '?1'}}" +
+    "{fecha_fin:{$lte: '?1'}}," +
+    "{idHabitacion:{$eq:'?2'}}" +
     "]}")
-    List<reserva> findByRange(Date fecha_inicio, Date fecha_fin);
+    List<reserva> findByRange(LocalDate fecha_inicio, LocalDate fecha_fin, Integer idHabitacion);
 
     @Query("idHabitacion:'?0")
     List<reserva> findByIdHabitacion(Integer idHabitacion);
