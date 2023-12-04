@@ -1,0 +1,277 @@
+Cliente: 
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      '_id',
+      'nombre'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'int'
+      },
+      nombre: {
+        bsonType: 'string'
+      },
+      consumo: {
+        bsonType: 'array',
+        minItems: 0,
+        uniqueItems: true,
+        additionalProperties: false,
+        items: {
+          bsonType: 'object',
+          required: [
+            'idServicio',
+            'tipoServicio',
+            'costo',
+            'productos'
+          ],
+          properties: {
+            idServicio: {
+              bsonType: 'int'
+            },
+            tipoServicio: {
+              bsonType: 'string'
+            },
+            costo: {
+              bsonType: 'int'
+            },
+            productos: {
+              bsonType: 'array',
+              minItems: 1,
+              uniqueItems: true,
+              additionalProperties: false,
+              items: {
+                bsonType: 'object',
+                required: [
+                  'id_producto',
+                  'nom_producto',
+                  'costo'
+                ],
+                properties: {
+                  id_producto: {
+                    bsonType: 'int'
+                  },
+                  nom_producto: {
+                    bsonType: 'string'
+                  },
+                  costo: {
+                    bsonType: 'int'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+Habitación:
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      '_id',
+      'idTipo',
+      'televisor',
+      'minibar',
+      'cafetera'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'int'
+      },
+      idTipo: {
+        bsonType: 'int'
+      },
+      televisor: {
+        bsonType: 'bool'
+      },
+      minibar: {
+        bsonType: 'bool'
+      },
+      cafetera: {
+        bsonType: 'bool'
+      }
+    }
+  }
+}
+
+Reserva:
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'idHabitacion',
+      '_id',
+      'idCliente',
+      'fecha_inicio',
+      'fecha_fin'
+    ],
+    properties: {
+      idHabitacion: {
+        bsonType: 'int'
+      },
+      _id: {
+        bsonType: 'int'
+      },
+      idCliente: {
+        bsonType: 'int'
+      },
+      fecha_inicio: {
+        bsonType: 'date'
+      },
+      fecha_fin: {
+        bsonType: 'date'
+      },
+      consumo: {
+        bsonType: 'array',
+        minItems: 0,
+        uniqueItems: true,
+        additionalProperties: false,
+        items: {
+          bsonType: 'int'
+        }
+      }
+    }
+  }
+}
+
+Servicios:
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      '_id',
+      'costo',
+      'tipo'
+    ],
+    properties: {
+      _id: {
+        bsonType: 'int',
+        minimum: 0
+      },
+      costo: {
+        bsonType: 'int',
+        minimum: 0
+      },
+      tipo: {
+        'enum': [
+          'prestamo_utencilios',
+          'lavado',
+          'gimnasio',
+          'internet',
+          'piscina',
+          'restaurante',
+          'supermercado',
+          'bar',
+          'tienda',
+          'spa',
+          'salon_conferencias',
+          'salon_reuniones',
+          'id_salon'
+        ]
+      },
+      capacidad: {
+        bsonType: 'int',
+        minimum: 1
+      },
+      nom_utencilio: {
+        bsonType: 'string'
+      },
+      tipo_prenda: {
+        bsonType: 'string'
+      },
+      num_prenda: {
+        bsonType: 'int'
+      },
+      num_maquinas: {
+        bsonType: 'int'
+      },
+      horario_servicio: {
+        bsonType: 'string'
+      },
+      profundidad: {
+        bsonType: 'int',
+        minimum: 1
+      },
+      id_subServicio: {
+        bsonType: 'int',
+        minimum: 0
+      },
+      descripcion: {
+        bsonType: 'string'
+      },
+      nombre: {
+        bsonType: 'string',
+        description: 'para bares,supermercados,restaurates y tiendas'
+      },
+      estilo: {
+        bsonType: 'string'
+      },
+      productos: {
+        bsonType: 'array',
+        minItems: 1,
+        uniqueItems: true,
+        additionalProperties: false,
+        items: {
+          bsonType: 'object',
+          required: [
+            'id_producto',
+            'nom_producto',
+            'costo'
+          ],
+          properties: {
+            id_producto: {
+              bsonType: 'int'
+            },
+            nom_producto: {
+              bsonType: 'string'
+            },
+            costo: {
+              bsonType: 'int'
+            }
+          }
+        }
+      },
+      fecha_HoraReserva: {
+        bsonType: 'bool'
+      },
+      duracion: {
+        bsonType: 'double'
+      },
+      id_salon: {
+        bsonType: 'int'
+      }
+    }
+  }
+}
+
+TipoHabitación:
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'idTipo',
+      'nombreTipo',
+      'capacidad',
+      'costo'
+    ],
+    properties: {
+      idTipo: {
+        bsonType: 'int'
+      },
+      nombreTipo: {
+        bsonType: 'string'
+      },
+      capacidad: {
+        bsonType: 'int'
+      },
+      costo: {
+        bsonType: 'int'
+      }
+    }
+  }
+}
