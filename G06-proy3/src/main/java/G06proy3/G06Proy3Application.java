@@ -673,6 +673,7 @@ public class G06Proy3Application implements CommandLineRunner{
 				System.out.println("Digite el id de la reserva: ");
 				idReserva = Integer.parseInt(this.scanner.nextLine());
 				getLLegadaCliente(idCliente,idReserva);
+				break;
 			case(6):
 				System.out.println("Digite el id del cliente: ");
 				idCliente = Integer.parseInt(this.scanner.nextLine());
@@ -681,12 +682,14 @@ public class G06Proy3Application implements CommandLineRunner{
 				System.out.println("Digite la fecha de la reserva");
 				fecha_inicio = LocalDateTime.parse(this.scanner.nextLine());
 				updateLLegadaCliente(idCliente, idReserva, fecha_inicio);
+				break;
 			case(7):
 				System.out.println("Digite el id del cliente: ");
 				idCliente = Integer.parseInt(this.scanner.nextLine());
 				System.out.println("Digite el id de la reserva: ");
 				idReserva = Integer.parseInt(this.scanner.nextLine());
 				getSalidaCliente(idCliente,idReserva);
+				break;
 			case(8):
 				System.out.println("Digite el id del cliente: ");
 				idCliente = Integer.parseInt(this.scanner.nextLine());
@@ -695,6 +698,7 @@ public class G06Proy3Application implements CommandLineRunner{
 				System.out.println("Digite la fecha de la reserva");
 				fecha_inicio = LocalDateTime.parse(this.scanner.nextLine());
 				updateSalidaCliente(idCliente, idReserva, fecha_inicio);
+				break;
 
 		}
 	}
