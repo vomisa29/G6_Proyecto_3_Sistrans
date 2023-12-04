@@ -1,6 +1,6 @@
 package G06proy3.modelo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.data.annotation.Id;
@@ -14,11 +14,11 @@ public class reserva {
 
     private Integer idHabitacion;
     private Integer idCliente;
-    private LocalDate fecha_inicio;
-    private LocalDate fecha_fin;
+    private LocalDateTime fecha_inicio;
+    private LocalDateTime fecha_fin;
     private ArrayList<Integer> consumo;
     
-    public reserva(Integer idReserva, Integer idHabitacion, Integer idCliente, LocalDate fecha_inicio, LocalDate fecha_fin) {
+    public reserva(Integer idReserva, Integer idHabitacion, Integer idCliente, LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
         this.idReserva = idReserva;
         this.idHabitacion = idHabitacion;
         this.idCliente = idCliente;
@@ -50,19 +50,19 @@ public class reserva {
         this.idCliente = idCliente;
     }
 
-    public LocalDate getFecha_inicio() {
+    public LocalDateTime getFecha_inicio() {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(LocalDate fecha_inicio) {
+    public void setFecha_inicio(LocalDateTime fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
-    public LocalDate getFecha_fin() {
+    public LocalDateTime getFecha_fin() {
         return fecha_fin;
     }
 
-    public void setFecha_fin(LocalDate fecha_fin) {
+    public void setFecha_fin(LocalDateTime fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
 

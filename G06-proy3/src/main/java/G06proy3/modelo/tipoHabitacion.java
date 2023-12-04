@@ -9,13 +9,13 @@ public class tipoHabitacion {
     @Id
     private Integer idTipo;
     
-    private String nombre;
+    private String nombreTipo;
     private Integer capacidad;
     private Integer costo;
 
-    public tipoHabitacion(Integer idTipo, String nombre, Integer capacidad, Integer costo) {
+    public tipoHabitacion(Integer idTipo, String nombreTipo, Integer capacidad, Integer costo) {
         this.idTipo = idTipo;
-        this.nombre = nombre;
+        this.nombreTipo = nombreTipo;
         this.capacidad = capacidad;
         this.costo = costo;
     }
@@ -28,12 +28,12 @@ public class tipoHabitacion {
         this.idTipo = idTipo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreTipo() {
+        return nombreTipo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreTipo(String nombreTipo) {
+        this.nombreTipo = nombreTipo;
     }
 
     public Integer getCapacidad() {

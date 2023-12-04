@@ -1,6 +1,6 @@
 package G06proy3.repositorio;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -15,7 +15,7 @@ public interface reservasRepository extends MongoRepository<reserva,Integer>{
     "{fecha_fin:{$lte: '?1'}}," +
     "{idHabitacion:{$eq:'?2'}}" +
     "]}")
-    List<reserva> findByRange(LocalDate fecha_inicio, LocalDate fecha_fin, Integer idHabitacion);
+    List<reserva> findByRange(LocalDateTime fecha_inicio, LocalDateTime fecha_fin, Integer idHabitacion);
 
     @Query("{$and:[{idCliente:'?0},{idReserva:'?1'}]}")
     reserva findByIdCliente_AND_IdReserva(Integer idCliente, Integer idReserva);

@@ -1,7 +1,7 @@
 package G06proy3.modelo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,7 +27,7 @@ public class servicios {
     private Integer id_subServicio;//para restaurante, supermercado, bar, tienda y spa
     private String tipo_tienda;
     private ArrayList<producto> productos;
-    private Date fecha_horaReserva;
+    private LocalDateTime fecha_horaReserva;
     private double duracion;
     private Integer id_salon;
     
@@ -168,12 +168,12 @@ public class servicios {
     }
 
 
-    public Date isFecha_horaReserva() {
+    public LocalDateTime isFecha_horaReserva() {
         return fecha_horaReserva;
     }
 
 
-    public void setFecha_horaReserva(Date fecha_horaReserva) {
+    public void setFecha_horaReserva(LocalDateTime fecha_horaReserva) {
         this.fecha_horaReserva = fecha_horaReserva;
     }
 
